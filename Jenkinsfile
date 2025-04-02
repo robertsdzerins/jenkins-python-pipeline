@@ -26,31 +26,28 @@ pipeline {
 
 def installDeps() {
     echo "Installing Python dependencies..."
-    sh '''
+    bat '''
         git clone https://github.com/mtararujs/python-greetings
         cd python-greetings
-        ls
-        pip3 install -r requirements.txt
+        dir
+        pip install -r requirements.txt
     '''
 }
 
 def deploy(env, port) {
     echo "Deploying to ${env} environment on port ${port}..."
-    sh """
+    bat """
         git clone https://github.com/mtararujs/python-greetings app-${env}
-        pm2 delete greetings-app-${env} || true
-        cd app-${env}
-        pm2 start app.py --name greetings-app-${env} -- --port ${port}
+        cd app-${env} && pm2 delete greetings-app-${env} || exit 0
+        cd app-${env} && pm2 start app.py --name greetings-app-${env} -- --port ${port}
     """
 }
 
 def runTests(env) {
     echo "Running tests on ${env} environment..."
-    sh """
+    bat """
         git clone https://github.com/mtararujs/course-js-api-framework tests-${env}
-        cd tests-${env}
-        npm install
-        npm run greetings greetings_${env}
+        cd tests-${env} && npm install
+        cd tests-${env} && npm run greetings greetings_${env}
     """
 }
-
