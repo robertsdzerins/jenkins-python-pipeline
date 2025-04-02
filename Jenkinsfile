@@ -30,7 +30,7 @@ def installDeps() {
         git clone https://github.com/mtararujs/python-greetings
         cd python-greetings
         dir
-        pip install -r requirements.txt
+        "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pip.exe" install -r requirements.txt
     '''
 }
 
